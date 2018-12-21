@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "139566868789",
+    "firebase_url": "https://appckathon-ef09c.firebaseio.com",
+    "project_id": "appckathon-ef09c",
+    "storage_bucket": "appckathon-ef09c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139566868789:android:b10a9b85de721345",
+        "android_client_info": {
+          "package_name": "com.appckathon.appckathon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139566868789-jsq60q9skv1r3fgh3mkvu7vd51v35dls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC87MJJ2lxICVuXLZvffQpf-5dZrVvIPto"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
