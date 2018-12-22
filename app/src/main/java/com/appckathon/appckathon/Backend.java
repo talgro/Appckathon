@@ -3,6 +3,9 @@ package com.appckathon.appckathon;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,7 +67,52 @@ class Find_EL implements ChildEventListener{
         return _ans;
     }
 }
+class Groups_EL implements ValueEventListener {
+    private ArrayList<Hackathon> hackathons = new ArrayList<Hackathon>();
 
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+            Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
+            hackathons.add(currHackathon);
+        }
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+    }
+
+    public ArrayList<Hackathon> getHackathons(){
+        return hackathons;
+    }
+}
+class SignUpListener implements OnCompleteListener{
+    boolean ans = false;
+    @Override
+    public void onComplete(@NonNull Task task) {
+        if (task.isSuccessful()) {
+            ans = true;
+        }
+    }
+
+    public boolean signupSucceed(){
+        return ans;
+    }
+}
+class LoginListener implements OnCompleteListener{
+    boolean ans = false;
+    @Override
+    public void onComplete(@NonNull Task task) {
+        if (task.isSuccessful()) {
+            ans = true;
+        }
+    }
+
+    public boolean loginSucceed(){
+        return ans;
+    }
+}
 public class Backend {
     //data member
     private FirebaseDatabase _FBinstance;
@@ -89,13 +137,23 @@ public class Backend {
     }
 
     //methods
-    public void userSignin (String UN, String PW){
-        //TODO: implement
+    public boolean signin (String email, String password){
+        LoginListener listener = new LoginListener();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() == null) {
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(listener);
+            return listener.loginSucceed();
+        }
+        return true;
     }
 
-    public void registerNewUser(String UN, String PW){
-        //TODO: add more details to the input
-        //TODO: implement
+    public boolean signup(String email, String password){
+        SignUpListener listener = new SignUpListener();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(listener);
+        return listener.signupSucceed();
     }
 
     public void createNewHackathon(int ownerID, Hackathon hackathon) throws HackathonAlreadyExists{
@@ -144,7 +202,11 @@ public class Backend {
         }
     }
 
-    ///////////////
+    public void signupToHackathon(int userID, Hackathon hackathon){
+        int hID = hackathon.getID();
 
+    }
+
+    ///////////////
 
 }

@@ -6,4 +6,9 @@ public class Hackathon {
         //TODO: implement
         return null;
     }
+
+    int getID(){
+        //TODO: implement
+        return 0;
+    }
 }
