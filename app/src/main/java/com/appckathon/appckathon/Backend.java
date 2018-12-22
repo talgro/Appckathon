@@ -9,7 +9,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+class GetHackathons_EL implements ValueEventListener {
+    private ArrayList<Hackathon> hackathons = new ArrayList<Hackathon>();
+
+    @Override
+    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+            Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
+            hackathons.add(currHackathon);
+        }
+    }
+
+    @Override
+    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+    }
+
+    public ArrayList<Hackathon> getHackathons(){
+        return hackathons;
+    }
+}
 class Find_EL implements ChildEventListener{
     boolean _ans = false;
     @Override
@@ -101,6 +124,27 @@ public class Backend {
 
     /////////////////
 
-    public
+    public ArrayList<Hackathon> getListOfHackathons() throws NoHackathonsInDB{
+        ArrayList<Hackathon> ans = new ArrayList<>();
+        GetHackathons_EL handler = new GetHackathons_EL();
+
+        Query checkIfNameExists = _hackathonsRef.orderByChild("name");
+        checkIfNameExists.addValueEventListener(handler);
+
+        ArrayList<Hackathon> hackathonsList = new ArrayList<>();
+        if (hackathonsList == null){
+            throw new NoHackathonsInDB();
+        }
+        return handler.getHackathons();
+    }
+
+    private class NoHackathonsInDB extends Exception{
+        NoHackathonsInDB(){
+            super("There are no hackathons in DB.");
+        }
+    }
+
+    ///////////////
+
 
 }
