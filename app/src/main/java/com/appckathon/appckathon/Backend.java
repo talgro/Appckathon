@@ -1,10 +1,12 @@
 package com.appckathon.appckathon;
 
+import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -13,107 +15,120 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
-class GetHackathons_EL implements ValueEventListener {
-    private ArrayList<Hackathon> hackathons = new ArrayList<Hackathon>();
 
-    @Override
-    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-            Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
-            hackathons.add(currHackathon);
-        }
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-    }
-
-    public ArrayList<Hackathon> getHackathons(){
-        return hackathons;
-    }
-}
-class Find_EL implements ChildEventListener{
-    boolean _ans = false;
-    @Override
-    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        _ans = true;
-    }
-
-    @Override
-    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        _ans = true;
-    }
-
-    @Override
-    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-    }
-
-    @Override
-    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-    }
-
-    public boolean isHackathonAlreadyExists(){
-        return _ans;
-    }
-}
-class Groups_EL implements ValueEventListener {
-    private ArrayList<Hackathon> hackathons = new ArrayList<Hackathon>();
-
-    @Override
-    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-            Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
-            hackathons.add(currHackathon);
-        }
-    }
-
-    @Override
-    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-    }
-
-    public ArrayList<Hackathon> getHackathons(){
-        return hackathons;
-    }
-}
-class SignUpListener implements OnCompleteListener{
-    boolean ans = false;
-    @Override
-    public void onComplete(@NonNull Task task) {
-        if (task.isSuccessful()) {
-            ans = true;
-        }
-    }
-
-    public boolean signupSucceed(){
-        return ans;
-    }
-}
-class LoginListener implements OnCompleteListener{
-    boolean ans = false;
-    @Override
-    public void onComplete(@NonNull Task task) {
-        if (task.isSuccessful()) {
-            ans = true;
-        }
-    }
-
-    public boolean loginSucceed(){
-        return ans;
-    }
-}
 public class Backend {
+
+
+    class GetHackathons_EL implements ValueEventListener {
+        private ArrayList<Hackathon> hackathons = new ArrayList<>();
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
+                hackathons.add(currHackathon);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+
+        public ArrayList<Hackathon> getHackathons(){
+            return hackathons;
+        }
+    }
+    class Find_EL implements ChildEventListener{
+        private boolean _ans = false;
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            _ans = true;
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            _ans = true;
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+
+        public boolean isHackathonAlreadyExists(){
+            return _ans;
+        }
+    }
+    class Groups_EL implements ValueEventListener {
+        private ArrayList<Hackathon> hackathons = new ArrayList<Hackathon>();
+
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
+                hackathons.add(currHackathon);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+
+        public ArrayList<Hackathon> getHackathons(){
+            return hackathons;
+        }
+    }
+    class SignUpListener implements OnCompleteListener{
+        boolean ans = false;
+        @Override
+        public void onComplete(@NonNull Task task) {
+            if (task.isSuccessful()) {
+                ans = true;
+            }
+        }
+
+        public boolean signupSucceed(){
+            return ans;
+        }
+    }
+    class LoginListener implements OnCompleteListener{
+        boolean ans = false;
+        @Override
+        public void onComplete(@NonNull Task task) {
+            if (task.isSuccessful()) {
+                ans = true;
+            }
+        }
+
+        public boolean loginSucceed(){
+            return ans;
+        }
+    }
+    public class FBinit extends Application {
+
+        @Override
+        public void onCreate() {
+            super.onCreate();
+            if (!FirebaseApp.getApps(this).isEmpty()) {
+                FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            }
+        }
+    }
+
     //data member
     private FirebaseDatabase _FBinstance;
     private DatabaseReference _hackathonsRef;
@@ -122,6 +137,8 @@ public class Backend {
 
     //singleton
     private Backend(){
+        FBinit test = new FBinit();
+        test.onCreate();
         _FBinstance = FirebaseDatabase.getInstance();
         _hackathonsRef = _FBinstance.getReference("hackathons");
         _findEL = new Find_EL();
@@ -183,13 +200,11 @@ public class Backend {
     /////////////////
 
     public ArrayList<Hackathon> getListOfHackathons() throws NoHackathonsInDB{
-        ArrayList<Hackathon> ans = new ArrayList<>();
         GetHackathons_EL handler = new GetHackathons_EL();
-
         Query checkIfNameExists = _hackathonsRef.orderByChild("name");
         checkIfNameExists.addValueEventListener(handler);
 
-        ArrayList<Hackathon> hackathonsList = new ArrayList<>();
+        ArrayList<Hackathon> hackathonsList = handler.getHackathons();
         if (hackathonsList == null){
             throw new NoHackathonsInDB();
         }
@@ -203,10 +218,13 @@ public class Backend {
     }
 
     public void signupToHackathon(int userID, Hackathon hackathon){
-        int hID = hackathon.getID();
-
+        //TODO: implement
     }
 
-    ///////////////
+    public static void main(String args[]){
+        boolean test = false;
+        test = Backend.getInstance().signup("test2@appckathon.com", "appckathon2");
+        System.out.println(test);
+    }
 
 }
