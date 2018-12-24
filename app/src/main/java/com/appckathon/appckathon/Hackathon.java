@@ -11,5 +11,5 @@ public class Hackathon {
         //TODO: implement
         return 0;
     }
-    void testCommitFUnction(){ }
+    void testCommitFUnction2(){ }
 }
