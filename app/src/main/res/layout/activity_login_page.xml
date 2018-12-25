@@ -26,17 +26,17 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/text_box_email"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Email Address"
-                android:inputType="textPersonName" />
+                android:inputType="textEmailAddress" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/text_box_password"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -47,7 +47,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -58,7 +58,7 @@
             android:layout_height="10dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/text_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

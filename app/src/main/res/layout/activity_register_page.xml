@@ -30,7 +30,7 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/text_box_first_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -41,7 +41,7 @@
                     android:inputType="textPersonName" />
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/text_box_last_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editText5"
+            android:id="@+id/text_box_email"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -64,7 +64,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/editText6"
+            android:id="@+id/text_box_password"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -78,7 +78,7 @@
             android:layout_height="70dp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button_register"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
