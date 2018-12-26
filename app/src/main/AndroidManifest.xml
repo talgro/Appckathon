@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginPage" />
+        <activity android:name=".LoginPage" android:exported="true"/>
         <activity android:name=".RegisterPage" />
         <activity android:name=".UserProfilePage" android:exported="true">
         </activity>
