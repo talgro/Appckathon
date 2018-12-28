@@ -62,7 +62,7 @@ public class LoginPage extends AppCompatActivity {
             auth.signInWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(listener);
             if (listener.loginSucceed()){
-                startActivity(new Intent(this, UserProfilePage.class));
+                startActivity(new Intent(this, HomePage.class));
             }
             else{
                 System.out.println("failed");

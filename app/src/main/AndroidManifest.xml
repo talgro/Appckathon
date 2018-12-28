@@ -11,10 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginPage" android:exported="true"/>
+        <activity
+            android:name=".LoginPage"
+            android:exported="true" />
         <activity android:name=".RegisterPage" />
-        <activity android:name=".UserProfilePage" android:exported="true">
-        </activity>
+        <activity
+            android:name=".HomePage"
+            android:label="@string/title_activity_home_page"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true"></activity>
     </application>
 
 </manifest>
