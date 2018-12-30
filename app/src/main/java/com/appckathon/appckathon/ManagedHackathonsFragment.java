@@ -18,7 +18,6 @@ import android.widget.ListView;
  * to handle interaction events.
  */
 public class ManagedHackathonsFragment extends Fragment {
-
     private OnFragmentInteractionListener mListener;
 
     public ManagedHackathonsFragment() {
@@ -28,10 +27,6 @@ public class ManagedHackathonsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-
     }
 
     @Override
@@ -43,7 +38,6 @@ public class ManagedHackathonsFragment extends Fragment {
         ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathons_arr);
         hackathons_list.setAdapter(adapter);
-        // Inflate the layout for this fragment
         return view;
     }
 
