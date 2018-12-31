@@ -7,34 +7,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import com.google.android.gms.common.SignInButton;
+import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPage extends AppCompatActivity {
 
-    class LoginListener implements OnCompleteListener {
-        boolean ans = false;
-        @Override
-        public void onComplete(@NonNull Task task) {
-            if (task.isSuccessful()) {
-                ans = true;
-            }
-        }
-
-        public boolean loginSucceed(){
-            return ans;
-        }
-    }
-
     //data members
-
     private Button signInButton;
     EditText emailTxt;
     EditText passwordTxt;
-    private FirebaseAuth auth;
+    private FirebaseAuth auth = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,22 +40,32 @@ public class LoginPage extends AppCompatActivity {
         });
     }
 
-    private void signin (){
-        String email = emailTxt.getText().toString();
-        String pass = passwordTxt.getText().toString();
-        LoginListener listener = new LoginListener();
-        if (auth.getCurrentUser() == null) {
-            auth.signInWithEmailAndPassword(email, pass)
-                    .addOnCompleteListener(listener);
-            if (listener.loginSucceed()){
-                startActivity(new Intent(this, HomePage.class));
-            }
-            else{
-                System.out.println("failed");
-                //TODO: Pop a message to the user : login failed
-            }
-        }
-        System.out.println("not null");
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
+
+    private void signin (){
+        String email = emailTxt.getText().toString();
+        String password = passwordTxt.getText().toString();
+
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = auth.getCurrentUser();
+                            Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginPage.this, HomePage.class));
+
+                        }
+                        else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginPage.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
 }
