@@ -17,9 +17,14 @@
         <activity android:name=".RegisterPage" />
         <activity
             android:name=".HomePage"
+            android:exported="true"
             android:label="@string/title_activity_home_page"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HackathonPage"
+            android:exported="true"
+            android:label="@string/title_activity_hackathon_page"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

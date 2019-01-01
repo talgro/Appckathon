@@ -1,9 +1,9 @@
 package com.appckathon.appckathon;
 
 import android.net.Uri;
-import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class HomePage extends AppCompatActivity implements ManagedHackathonsFragment.OnFragmentInteractionListener, ParticipatedHackathonsFragment.OnFragmentInteractionListener, SearchHackathonsFragment.OnFragmentInteractionListener {
+public class HackathonPage extends AppCompatActivity implements HackathonTeamsFragment.OnFragmentInteractionListener, HackthonsManagersFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -30,7 +30,7 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private HackathonPage.SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -40,13 +40,13 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_hackathon_page);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new HackathonPage.SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -63,7 +63,7 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home_page, menu);
+        getMenuInflater().inflate(R.menu.menu_hackathon_page, menu);
         return true;
     }
 
@@ -102,13 +102,10 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
             Fragment fragment = null;
             switch(position) {
                 case 0:
-                    fragment = new ManagedHackathonsFragment();
+                    fragment = new HackathonTeamsFragment();
                     break;
                 case 1:
-                    fragment = new ParticipatedHackathonsFragment();
-                    break;
-                case 2:
-                    fragment = new SearchHackathonsFragment();
+                    fragment = new HackthonsManagersFragment();
                     break;
             }
             return fragment;

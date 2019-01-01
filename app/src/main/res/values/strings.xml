@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">Appckathon</string>
     <string name="title_activity_home_page">HomePage</string>
-    <string name="tab_text_1">Managed</string>
-    <string name="tab_text_2">Participating</string>
-    <string name="tab_text_3">Search</string>
+    <string name="home_tab_text_1">Managed</string>
+    <string name="home_tab_text_2">Participating</string>
+    <string name="home_tab_text_3">Search</string>
+    <string name="hackathon_tab_text_1">Teams</string>
+    <string name="hackathon_tab_text_2">Managers</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_hackathon_page">HackathonPage</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
