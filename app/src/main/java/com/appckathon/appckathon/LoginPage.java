@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginPage extends AppCompatActivity {
@@ -21,6 +21,7 @@ public class LoginPage extends AppCompatActivity {
     private Button signInButton;
     EditText emailTxt;
     EditText passwordTxt;
+    FirebaseAuth _FBauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,29 +33,31 @@ public class LoginPage extends AppCompatActivity {
         signInButton = (Button) findViewById(R.id.button_login);
 
         //firebase init
-        Backend.setInstance (FirebaseAuth.getInstance(), FirebaseDatabase.getInstance());
-
+        _FBauth = FirebaseAuth.getInstance();
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                trySignin();
+                signin();
             }
         });
     }
 
-    private void trySignin(){
+    private void signin(){
         String email = emailTxt.getText().toString();
         String password = passwordTxt.getText().toString();
-        Backend.getInstance().signin(this, email, password);
-    }
 
-    public void signinAnswer(boolean answer){
-        if (true == answer){
-            Toast.makeText(this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginPage.this, HomePage.class));
-        }
-        else{
-            Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-        }
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>(){
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginPage.this, HomePage.class));
+                        }
+                        else{
+                            Toast.makeText(LoginPage.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

@@ -3,6 +3,7 @@ package com.appckathon.appckathon;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +11,25 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link SearchHackathonsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link SearchHackathonsFragment#newInstance} factory method to
+ * Use the {@link SearchHackathonsFragment newInstance} factory method to
  * create an instance of this fragment.
  */
 public class SearchHackathonsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
+    FirebaseDatabase _db;
 
     public SearchHackathonsFragment() {
         // Required empty public constructor
@@ -29,18 +38,37 @@ public class SearchHackathonsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _db = FirebaseDatabase.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
-        //TODO: insert actual list of all hackathons_arr
-        String[] hackathons_arr = {"hackathon3", "hackathon4", "hackathon5", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6", "hackathon6"};
+        //ask existing hackathons list from backend. firebase
         ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathons_arr);
-        hackathons_list.setAdapter(adapter);
+        fillListWithValeusFromDB(hackathons_list);
         return view;
+    }
+
+    private void fillListWithValeusFromDB(final ListView hackathons_list){
+        _db.getReference("hackathons").orderByChild("name").addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> hackathons = new ArrayList<>();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
+                    hackathons.add(currHackathon.getName());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathons);
+                hackathons_list.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
