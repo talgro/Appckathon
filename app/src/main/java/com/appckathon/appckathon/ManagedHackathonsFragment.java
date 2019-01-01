@@ -34,6 +34,7 @@ public class ManagedHackathonsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
         //TODO: insert actual list of managed hackathons_arr
+
         String[] hackathons_arr = {"hackathon1", "hackathon2", "hackathon3", "hackathon4"};
         ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathons_arr);

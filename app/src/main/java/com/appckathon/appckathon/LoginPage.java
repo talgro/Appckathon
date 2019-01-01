@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -20,52 +21,40 @@ public class LoginPage extends AppCompatActivity {
     private Button signInButton;
     EditText emailTxt;
     EditText passwordTxt;
-    private FirebaseAuth auth = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //activity init
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-
-        auth = FirebaseAuth.getInstance();
         emailTxt = (EditText)findViewById(R.id.text_box_email);
         passwordTxt = (EditText)findViewById(R.id.text_box_password);
         signInButton = (Button) findViewById(R.id.button_login);
 
+        //firebase init
+        Backend.setInstance (FirebaseAuth.getInstance(), FirebaseDatabase.getInstance());
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signin();
+                trySignin();
             }
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-
-    private void signin (){
+    private void trySignin(){
         String email = emailTxt.getText().toString();
         String password = passwordTxt.getText().toString();
+        Backend.getInstance().signin(this, email, password);
+    }
 
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = auth.getCurrentUser();
-                            Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginPage.this, HomePage.class));
-
-                        }
-                        else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginPage.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+    public void signinAnswer(boolean answer){
+        if (true == answer){
+            Toast.makeText(this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(LoginPage.this, HomePage.class));
+        }
+        else{
+            Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
