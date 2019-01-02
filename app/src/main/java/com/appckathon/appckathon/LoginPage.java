@@ -43,8 +43,8 @@ public class LoginPage extends AppCompatActivity {
     }
 
     private void signin(){
-        String email = emailTxt.getText().toString();
-        String password = passwordTxt.getText().toString();
+        final String email = emailTxt.getText().toString();
+        final String password = passwordTxt.getText().toString();
 
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>(){
@@ -52,12 +52,20 @@ public class LoginPage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginPage.this, HomePage.class));
+                            Intent intent = new Intent(LoginPage.this, HomePage.class);
+                            User user = getUserFromFB(email);
+                            intent.putExtra("User", user);
+                            startActivity(intent);
                         }
                         else{
                             Toast.makeText(LoginPage.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    //TODO: Tal implement. get user object from fireBase by its email.
+    private User getUserFromFB(String email) {
+        return null;
     }
 }

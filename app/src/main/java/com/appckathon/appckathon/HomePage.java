@@ -1,5 +1,6 @@
 package com.appckathon.appckathon;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -36,6 +37,7 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private User _user = (User)getIntent().getSerializableExtra("User");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+
 
     }
 
