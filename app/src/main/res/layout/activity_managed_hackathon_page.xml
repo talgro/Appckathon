@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UnsignedHackathonPage">
+
+    <ImageView
+        android:id="@+id/hackathon_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_border"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[17]" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="delete this hackathon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hackathon_teams_list" />
+
+    <TextView
+        android:id="@+id/hackathon_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:text="default_hackathon_name"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/hackathon_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/hackathon_description"
+        android:layout_width="367dp"
+        android:layout_height="122dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_border"
+        android:text="default_hackathon_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hackathon_image" />
+
+    <ListView
+        android:id="@+id/hackathon_teams_list"
+        android:layout_width="368dp"
+        android:layout_height="194dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hackathon_description" />
+
+    <TextView
+        android:id="@+id/hackathon_manager_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:text="default_manager_name"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/hackathon_image"
+        app:layout_constraintTop_toBottomOf="@+id/hackathon_name" />
+
+    <ImageButton
+        android:id="@+id/button_edit"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hackathon_description"
+        app:layout_constraintEnd_toEndOf="@+id/hackathon_description"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/hackathon_description"
+        app:layout_constraintTop_toTopOf="@+id/hackathon_description"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/button_add"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/hackathon_teams_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/hackathon_teams_list"
+        app:layout_constraintTop_toTopOf="@+id/hackathon_teams_list"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+</android.support.constraint.ConstraintLayout>
