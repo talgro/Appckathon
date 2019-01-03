@@ -26,6 +26,16 @@ public class Hackathon {
         _description = description;
     }
 
+    public Hackathon(String _name, Date startDate, Date endDate, String description, String managerName) {
+        this._id = _idCreator++;
+        this._name = _name;
+        this._teams = new ArrayList<Team>();
+        _description = description;
+        _managerName = managerName;
+        _startDate = startDate;
+        _endDate = endDate;
+    }
+
     /**
      * Date must be in the form of "dd/MM/yyyy HH:mm:ss"
      *
