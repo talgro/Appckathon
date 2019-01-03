@@ -164,10 +164,4 @@ public class Backend {
         _hackathonsRef.orderByChild("name").addValueEventListener(listener);
         return listener.getHackathons();
     }
-
-    public void signupToHackathon(int userID, Hackathon hackathon){
-        //TODO: implement
-    }
-
-
 }

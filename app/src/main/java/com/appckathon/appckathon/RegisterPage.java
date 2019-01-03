@@ -1,6 +1,7 @@
 package com.appckathon.appckathon;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegisterPage extends AppCompatActivity {
 
@@ -18,7 +26,6 @@ public class RegisterPage extends AppCompatActivity {
     EditText lastNameTxt;
     EditText emailTxt;
     EditText passwordTxt;
-    FirebaseAuth _FBauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +37,6 @@ public class RegisterPage extends AppCompatActivity {
         firstNameTxt = (EditText) findViewById(R.id.text_box_first_name);
         lastNameTxt = (EditText) findViewById(R.id.text_box_last_name);
         registerButton = (Button) findViewById(R.id.button_register);
-
-        //firebase init
-        _FBauth = FirebaseAuth.getInstance();//TODO: (tal) is this necessary?
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,18 +51,47 @@ public class RegisterPage extends AppCompatActivity {
 
         final String email = emailTxt.getText().toString();
         final String password = passwordTxt.getText().toString();
-        final String firstName = firstNameTxt.getText().toString();
-        final String lastName = lastNameTxt.getText().toString();
+        final String fullName = firstNameTxt.getText().toString() + " " + lastNameTxt.getText().toString();
 
-        //TODO: (tal) add user to firebase and show this if failed registration
-        boolean failed = false;
-        if (failed)
-            Toast.makeText(RegisterPage.this, "Registration failed.", Toast.LENGTH_SHORT).show();
-        //
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        db.getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(fullName)) {
+                    Toast.makeText(RegisterPage.this, "Users with same name is already exists.", Toast.LENGTH_SHORT).show();
+                } else {
+                    signupNewUser(email, password, fullName);
+                }
+            }
 
-        //once succesfully added user toast + move to home page
-        Toast.makeText(RegisterPage.this, "Registration successful! ", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(RegisterPage.this, HomePage.class));
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private  void signupNewUser(final String email, final String password, final String fullName){
+        //user does not exist. create it
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            //add new user's details to DB  also
+                            User newUser = new User(fullName, email);
+                            FirebaseDatabase.getInstance().getReference("users").child(fullName).setValue(newUser);
+                            //load home page
+                            Toast.makeText(RegisterPage.this, "Registration Successful.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterPage.this, HomePage.class));
+
+                        }
+                        else {
+                            Toast.makeText(RegisterPage.this, "Registration failed.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
 }

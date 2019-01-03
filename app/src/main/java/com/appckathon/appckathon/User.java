@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class User implements Serializable {
 
-    String _name;
-    String _email;
-    ArrayList<String> _managedHackathons;
-    ArrayList<String> _paticipatingHackathons;
+    private String _name;
+    private String _email;
+    private ArrayList<String> _managedHackathons;
+    private ArrayList<String> _paticipatingHackathons;
 
     public User(){
         //necessary for firebase
