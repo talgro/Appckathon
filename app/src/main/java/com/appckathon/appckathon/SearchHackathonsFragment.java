@@ -15,6 +15,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.ArrayList;
 
@@ -77,6 +79,8 @@ public class SearchHackathonsFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+    
 
     @Override
     public void onAttach(Context context) {

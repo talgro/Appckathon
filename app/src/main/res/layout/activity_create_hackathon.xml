@@ -51,6 +51,80 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Start: " />
+
+            <EditText
+                android:id="@+id/insert_start_day"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:ems="10"
+                android:inputType="date"
+                android:maxLength="2"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fill_hackathon_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="/"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="147dp" />
+
+            <EditText
+                android:id="@+id/insert_start_month"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="0dp"
+                android:ems="10"
+                android:inputType="date"
+                android:maxLength="2"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fill_hackathon_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:text="/"
+                tools:layout_editor_absoluteX="141dp"
+                tools:layout_editor_absoluteY="147dp" />
+
+            <EditText
+                android:id="@+id/insert_start_year"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="0dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="date"
+                android:maxLength="2"
+                android:maxLines="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fill_hackathon_name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/from_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="104dp">
+
+            <TextView
+                android:id="@+id/text_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="End:" />
 
             <EditText
@@ -97,80 +171,6 @@
 
             <EditText
                 android:id="@+id/insert_end_year"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="0dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="date"
-                android:maxLength="2"
-                android:maxLines="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fill_hackathon_name" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/from_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="104dp">
-
-            <TextView
-                android:id="@+id/text_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Start:" />
-
-            <EditText
-                android:id="@+id/insert_day"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:ems="10"
-                android:inputType="date"
-                android:maxLength="2"
-                android:maxLines="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fill_hackathon_name" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:text="/"
-                tools:layout_editor_absoluteX="141dp"
-                tools:layout_editor_absoluteY="147dp" />
-
-            <EditText
-                android:id="@+id/insert_month"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="0dp"
-                android:ems="10"
-                android:inputType="date"
-                android:maxLength="2"
-                android:maxLines="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fill_hackathon_name" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:text="/"
-                tools:layout_editor_absoluteX="141dp"
-                tools:layout_editor_absoluteY="147dp" />
-
-            <EditText
-                android:id="@+id/insert_year"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 public class HomePage extends AppCompatActivity implements ManagedHackathonsFragment.OnFragmentInteractionListener, ParticipatedHackathonsFragment.OnFragmentInteractionListener, SearchHackathonsFragment.OnFragmentInteractionListener {
@@ -37,7 +38,7 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private User _user = (User)getIntent().getSerializableExtra("User");
+    private FloatingActionButton addHackathonBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,13 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        addHackathonBtn = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        addHackathonBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this, CreateHackathon.class));
+            }
+        });
 
 
     }
@@ -104,7 +112,7 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
         @Override
         public Fragment getItem(int position) {
             Fragment fragment = null;
-            switch(position) {
+            switch (position) {
                 case 0:
                     fragment = new ManagedHackathonsFragment();
                     break;

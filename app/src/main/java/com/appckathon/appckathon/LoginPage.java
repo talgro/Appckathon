@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +29,7 @@ public class LoginPage extends AppCompatActivity {
     private Button signInButton;
     EditText emailTxt;
     EditText passwordTxt;
+    TextView signUpText;
     FirebaseAuth _FBauth;
 
     @Override
@@ -35,9 +37,10 @@ public class LoginPage extends AppCompatActivity {
         //activity init
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-        emailTxt = (EditText)findViewById(R.id.text_box_email);
-        passwordTxt = (EditText)findViewById(R.id.text_box_password);
+        emailTxt = (EditText) findViewById(R.id.text_box_email);
+        passwordTxt = (EditText) findViewById(R.id.text_box_password);
         signInButton = (Button) findViewById(R.id.button_login);
+        signUpText = (TextView) findViewById(R.id.text_signup);
 
         //firebase init
         _FBauth = FirebaseAuth.getInstance();
@@ -47,32 +50,40 @@ public class LoginPage extends AppCompatActivity {
                 signin();
             }
         });
+        signUpText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginPage.this, RegisterPage.class));
+            }
+        });
     }
 
-    private void signin(){
+    private void signin() {
         final String email = emailTxt.getText().toString();
         final String password = passwordTxt.getText().toString();
 
         _FBauth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>(){
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            moveUserToHomePage(task.getResult().getUser().getUid());
-                        }
-                        else{
+                            // moveUserToHomePage(task.getResult().getUser().getUid()); TODO: (tal) so we do not need this as we spoke?
+                            Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginPage.this, HomePage.class));
+
+                        } else {
                             Toast.makeText(LoginPage.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
 
-    private void moveUserToHomePage(String userID){
+    private void moveUserToHomePage(String userID) {
         //view message
         Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
         //start home page activity with current User object
         FirebaseDatabase.getInstance().getReference("users").child(userID)
-                .addListenerForSingleValueEvent(new ValueEventListener(){
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         //get user from DB and start new activity
