@@ -10,6 +10,10 @@ public class User implements Serializable {
     ArrayList<String> _managedHackathons;
     ArrayList<String> _paticipatingHackathons;
 
+    public User(){
+        //necessary for firebase
+    }
+
     public User(String _name, String _email) {
         this._name = _name;
         this._email = _email;

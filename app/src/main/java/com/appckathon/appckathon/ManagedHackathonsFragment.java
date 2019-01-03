@@ -41,20 +41,16 @@ public class ManagedHackathonsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
-        //TODO: insert actual list of managed hackathons_arr
-
-        String[] hackathons_arr = {"hackathon1", "hackathon2", "hackathon3", "hackathon4"};
         ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
         fillListWithValeusFromDB(hackathons_list);
         return view;
     }
 
     private void fillListWithValeusFromDB(final ListView hackathons_list){
-        String currUserMailHash = Integer.toString(FirebaseAuth.getInstance().getCurrentUser().getEmail().hashCode());
-        _db.getReference("users").child(currUserMailHash).child("managedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener(){
+        String currUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        _db.getReference("users").child(currUserID).child("managedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> hackathons = new ArrayList<>();
