@@ -44,6 +44,12 @@ public class RegisterPage extends AppCompatActivity {
     }
 
     private void register() {
+
+        final String email = emailTxt.getText().toString();
+        final String password = passwordTxt.getText().toString();
+        final String firstName = firstNameTxt.getText().toString();
+        final String lastName = lastNameTxt.getText().toString();
+
         //TODO: (tal) add user to firebase and show this if failed registration
         boolean failed = false;
         if (failed)
