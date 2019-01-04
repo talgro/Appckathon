@@ -50,7 +50,7 @@ public class ManagedHackathonsFragment extends Fragment {
 
     private void fillListWithValeusFromDB(final ListView hackathons_list){
         String currUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        _db.getReference("users").child(currUserID).child("managedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener(){
+        _db.getReference("users").child(currUserID).child("hackathons").child("participating").orderByChild("name").addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> hackathons = new ArrayList<>();

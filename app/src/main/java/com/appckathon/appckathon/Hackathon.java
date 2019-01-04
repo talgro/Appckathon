@@ -8,7 +8,7 @@ import java.util.Date;
  * This class represents a single Hackathon
  */
 public class Hackathon {
-
+ז
     private static int _idCreator = 0;
     private int _id;
     private String _name;

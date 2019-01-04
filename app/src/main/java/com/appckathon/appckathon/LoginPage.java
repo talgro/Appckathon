@@ -58,7 +58,6 @@ public class LoginPage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // moveUserToHomePage(task.getResult().getUser().getUid()); TODO: (tal) so we do not need this as we spoke?
                             Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginPage.this, HomePage.class));
                         }

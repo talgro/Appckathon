@@ -48,15 +48,14 @@ public class ParticipatedHackathonsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
         //ask hackathons list from backend. firebase
-        ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
-        //TODO: **TOM**: above line should have R.id.**participated_hackathons_list**, not **managed**
+        ListView hackathons_list = (ListView)view.findViewById(R.id.participated_hackathons_list);
         fillListWithValeusFromDB(hackathons_list);
         return view;
     }
 
     private void fillListWithValeusFromDB(final ListView hackathons_list){
-        String currUserMailHash = Integer.toString(FirebaseAuth.getInstance().getCurrentUser().getEmail().hashCode());
-        _db.getReference("users").child(currUserMailHash).child("participatedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener(){
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        _db.getReference("users").child(userID).child("hackathons").child("participating").orderByChild("name").addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> hackathons = new ArrayList<>();
@@ -65,7 +64,7 @@ public class ParticipatedHackathonsFragment extends Fragment {
                     hackathons.add(currHackathon.getName());
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathons);
-                hackathons_list.setAdapter(adapter);
+                //hackathons_list.setAdapter(adapter);
             }
 
             @Override
