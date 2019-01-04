@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -34,7 +32,6 @@ import java.util.List;
 public class ManagedHackathonsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     FirebaseDatabase _db;
-    List<String> hackathons = Arrays.asList("hackathon1", "hackahon2", "hackathon3");
 
     public ManagedHackathonsFragment() {
         // Required empty public constructor
@@ -51,7 +48,7 @@ public class ManagedHackathonsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
         ListView hackathons_list = (ListView) view.findViewById(R.id.managed_hackathons_list);
         final List<String>  hackathonNames;
-        hackathonNames = Arrays.asList("hack1", "hack2", "hack3");//TODO: (daniel) remove
+        hackathonNames = Arrays.asList("Manager_hack1", "Manager_hack2", "Manager_hack3");//TODO: (daniel) remove
         // List<String> hackathonNames = getHackathonNamesFromDB(); //TODO: (daniel) fix once tal implements
         fillList(hackathons_list, hackathonNames);
 
@@ -59,7 +56,10 @@ public class ManagedHackathonsFragment extends Fragment {
         hackathons_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getContext(), ManagedHackathonPage.class));
+                Intent intent = new Intent(getContext(), ManagedHackathonPage.class);
+                Hackathon hackathon = getHackathonByName(hackathonNames.get(position));
+                intent.putExtra("hackathon", hackathon);
+                startActivity(intent);
             }
         });
         return view;
@@ -72,7 +72,7 @@ public class ManagedHackathonsFragment extends Fragment {
     }
 
 
-    //TODO: (tal) this function needs to return a list of all hackthon names from DB
+    //TODO: (tal) this function needs to return a list of mannaged hackathons of current user
     private List<String> getHackathonNamesFromDB() {
         String currUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         _db.getReference("users").child(currUserID).child("managedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener() {
@@ -91,6 +91,11 @@ public class ManagedHackathonsFragment extends Fragment {
             }
         });
 
+        return null;
+    }
+
+    //TODO: (tal) this function needs to return the hackathon object of a given hackathon name
+    private Hackathon getHackathonByName(String hackathonName) {
         return null;
     }
 
