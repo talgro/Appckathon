@@ -93,7 +93,7 @@ public class CreateHackathon extends AppCompatActivity {
     }
 
     private void hackathonToDB(final Hackathon hackathon){
-        //add hackathon to ackathons table
+        //add hackathon to hackathons table
         FirebaseDatabase.getInstance().getReference("hackathons").child(hackathon.getName()).setValue(hackathon);
         //add hackathon to manged by current user
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
