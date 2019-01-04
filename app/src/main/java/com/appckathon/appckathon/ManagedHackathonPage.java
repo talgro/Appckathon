@@ -9,6 +9,7 @@ import android.widget.TextView;
 public class ManagedHackathonPage extends AppCompatActivity {
 
     //TODO: need to pass hackathon object from previouse page
+
     private Hackathon hackthon = (Hackathon) getIntent().getSerializableExtra("hackathon");
 
     private TextView hackathonName;

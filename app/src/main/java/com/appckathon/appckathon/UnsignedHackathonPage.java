@@ -10,6 +10,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class UnsignedHackathonPage extends AppCompatActivity {
 
     //TODO: need to pass hackathon object from previouse page
@@ -50,8 +54,12 @@ public class UnsignedHackathonPage extends AppCompatActivity {
     }
 
     private void joinHackathon() {
-        //TODO: (tal) add "hackthhon" object to current user hackathon list(participating list)
 
+        //TODO: (daniel) change the "hackathon" variable to the prev one
+        Hackathon hackathon = null;
+        String currUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference("users")
+                .child(currUserID).child("hackathons").child("participating").child(hackathon.getName()).setValue(hackathon);
         //once succesfully added user toast + move to home page
         Toast.makeText(UnsignedHackathonPage.this, "joined hackathon successfully! ", Toast.LENGTH_SHORT).show();
         //navigate back to home page
