@@ -40,6 +40,9 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
     private ViewPager mViewPager;
     private FloatingActionButton addHackathonBtn;
 
+    private TextView nameField;
+    private TextView emailfield;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,15 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
             }
         });
 
+        //fill text with user info
+        nameField = (TextView) findViewById(R.id.user_full_name);
+        emailfield= (TextView) findViewById(R.id.email);
+
+        String currentUserName = "*DEFAULT_USERNAME*"; //TODO: (tal) get this from FB
+        String currentUserEmail = "*DEFAULT_EMAIL*"; //TODO: (tal) get this from FB
+
+        nameField.setText(currentUserName);
+        emailfield.setText(currentUserEmail);
 
     }
 

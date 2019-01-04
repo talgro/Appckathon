@@ -1,6 +1,7 @@
 package com.appckathon.appckathon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -29,6 +34,7 @@ import java.util.ArrayList;
 public class ManagedHackathonsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     FirebaseDatabase _db;
+    List<String> hackathons = Arrays.asList("hackathon1", "hackahon2", "hackathon3");
 
     public ManagedHackathonsFragment() {
         // Required empty public constructor
@@ -43,14 +49,33 @@ public class ManagedHackathonsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
-        ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
-        fillListWithValeusFromDB(hackathons_list);
+        ListView hackathons_list = (ListView) view.findViewById(R.id.managed_hackathons_list);
+        final List<String>  hackathonNames;
+        hackathonNames = Arrays.asList("hack1", "hack2", "hack3");//TODO: (daniel) remove
+        // List<String> hackathonNames = getHackathonNamesFromDB(); //TODO: (daniel) fix once tal implements
+        fillList(hackathons_list, hackathonNames);
+
+        //set listner
+        hackathons_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getContext(), ManagedHackathonPage.class));
+            }
+        });
         return view;
     }
 
-    private void fillListWithValeusFromDB(final ListView hackathons_list){
+    private void fillList(final ListView hackathons_list, List<String> hackathonNames) {
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathonNames);
+        hackathons_list.setAdapter(adapter);
+    }
+
+
+    //TODO: (tal) this function needs to return a list of all hackthon names from DB
+    private List<String> getHackathonNamesFromDB() {
         String currUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        _db.getReference("users").child(currUserID).child("managedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener(){
+        _db.getReference("users").child(currUserID).child("managedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> hackathons = new ArrayList<>();
@@ -58,8 +83,6 @@ public class ManagedHackathonsFragment extends Fragment {
                     Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
                     hackathons.add(currHackathon.getName());
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathons);
-                hackathons_list.setAdapter(adapter);
             }
 
             @Override
@@ -67,6 +90,8 @@ public class ManagedHackathonsFragment extends Fragment {
 
             }
         });
+
+        return null;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

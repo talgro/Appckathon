@@ -50,7 +50,7 @@ public class ParticipatedHackathonsFragment extends Fragment {
         //ask hackathons list from backend. firebase
         ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
         //TODO: **TOM**: above line should have R.id.**participated_hackathons_list**, not **managed**
-        fillListWithValeusFromDB(hackathons_list);
+        //fillListWithValeusFromDB(hackathons_list);TODO: (tal) this is crashing app
         return view;
     }
 

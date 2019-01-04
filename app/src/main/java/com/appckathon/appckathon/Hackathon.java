@@ -1,5 +1,6 @@
 package com.appckathon.appckathon;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
 /**
  * This class represents a single Hackathon
  */
-public class Hackathon {
+public class Hackathon implements Serializable {
 
     private static int _idCreator = 0;
     private int _id;

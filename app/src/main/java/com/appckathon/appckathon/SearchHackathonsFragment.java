@@ -49,7 +49,7 @@ public class SearchHackathonsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
         //ask existing hackathons list from backend. firebase
         ListView hackathons_list = (ListView)view.findViewById(R.id.managed_hackathons_list);
-        fillListWithValeusFromDB(hackathons_list);
+        //fillListWithValeusFromDB(hackathons_list);TODO: (tal) this is crashing app
         return view;
     }
 
