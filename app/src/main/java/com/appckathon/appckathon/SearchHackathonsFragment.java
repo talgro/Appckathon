@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -59,6 +60,10 @@ public class SearchHackathonsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> hackathons = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    //dates handling
+                    Date startDate = handleDate(postSnapshot.child("startDate"));
+                    Date endDate = handleDate(postSnapshot.child("endDate"));
+
                     Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
                     hackathons.add(currHackathon.getName());
                 }
@@ -71,6 +76,13 @@ public class SearchHackathonsFragment extends Fragment {
 
             }
         });
+    }
+
+    private Date handleDate(DataSnapshot dateDS){
+        Date date = new Date();
+        date.setDate(Integer.parseInt(dateDS.child("date").toString()));
+        date.set(Integer.parseInt(dateDS.child("date").toString()));
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
