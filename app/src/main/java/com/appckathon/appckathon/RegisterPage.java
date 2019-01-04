@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -79,13 +81,13 @@ public class RegisterPage extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //add new user's details to DB  also
-                            User newUser = new User(fullName, email);
-                            FirebaseDatabase.getInstance().getReference("users").child(fullName).setValue(newUser);
+                            //add user's display name
+                            FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(fullName).build();
+                            currUser.updateProfile(profileUpdates);
                             //load home page
                             Toast.makeText(RegisterPage.this, "Registration Successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(RegisterPage.this, HomePage.class));
-
                         }
                         else {
                             Toast.makeText(RegisterPage.this, "Registration failed.", Toast.LENGTH_SHORT).show();
