@@ -16,11 +16,13 @@ import android.widget.ListView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,64 +48,81 @@ public class ParticipatedHackathonsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_managed_hackthons, container, false);
-        ListView hackathons_list = (ListView) view.findViewById(R.id.managed_hackathons_list);
-        final List<String>  hackathonNames;
-        hackathonNames = Arrays.asList("Participent_hack1", "Participent_hack2", "Participent_hack3");//TODO: (daniel) remove
-        // List<String> hackathonNames = getHackathonNamesFromDB(); //TODO: (daniel) fix once tal implements
-        fillList(hackathons_list, hackathonNames);
+        final ListView hackathons_list = (ListView) view.findViewById(R.id.managed_hackathons_list);
+        viewHackathonsList(view, hackathons_list);
+        return view;
+    }
 
+    private void setListenerForHackathonsSelections(final ListView hackathons_list, final ArrayList<Hackathon> hackathons){
         //set listner
         hackathons_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Hackathon selectedHackathon = hackathons.get(position);
                 Intent intent = new Intent(getContext(), SignedHackathonPage.class);
-                Hackathon hackathon = getHackathonByName(hackathonNames.get(position));
-                intent.putExtra("hackathon", hackathon);
+                intent.putExtra("hackathon", selectedHackathon);
+                //TODO: (daniel) modify SignedHackathonPage to get Hackathon object
                 startActivity(intent);
+                getActivity().finish();
             }
         });
-        return view;
     }
 
-    private void fillList(final ListView hackathons_list, List<String> hackathonNames) {
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathonNames);
-        hackathons_list.setAdapter(adapter);
-    }
-
-
-    //TODO: (tal) this function needs to return a list of participating hackathons of current user
-    private List<String> getHackathonNamesFromDB() {
-        String currUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        _db.getReference("users").child(currUserID).child("managedHackathons").orderByChild("name").addValueEventListener(new ValueEventListener() {
+    private void viewHackathonsList(View view, final ListView hackathons_list) {
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        _db.getReference("users").child(userID).child("hackathons").child("participating").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> hackathons = new ArrayList<>();
+                ArrayList<Hackathon> hackathons = new ArrayList<>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Hackathon currHackathon = postSnapshot.getValue(Hackathon.class);
-                    hackathons.add(currHackathon.getName());
+                    //create hackathon
+                    Hackathon currHackathon = HackathonFromSnapshot(postSnapshot);
+                    hackathons.add(currHackathon);
                 }
+                getNamesFromHackathonsList(hackathons, hackathons_list);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
-        return null;
     }
 
-    //TODO: (tal) this function needs to return the hackathon object of a given hackathon name
-    private Hackathon getHackathonByName(String hackathonName) {
-        return null;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    private void getNamesFromHackathonsList(final ArrayList<Hackathon> hackathons, ListView hackathons_list) {
+        //get list of hackathons names
+        ArrayList<String> hackathonNames = new ArrayList<>();
+        for (Hackathon h : hackathons) {
+            hackathonNames.add(h.getName());
         }
+        //view names
+        fillList(hackathons_list, hackathonNames);
+        setListenerForHackathonsSelections(hackathons_list, hackathons);
+    }
+
+    private Hackathon HackathonFromSnapshot (DataSnapshot ds){
+        //get properties
+        String description = ds.child("description").getValue().toString();
+        String managerName = ds.child("managername").getValue().toString();
+        String name = ds.child("name").getValue().toString();
+        Date start = handleDate(ds.child("startDate"));
+        Date end = handleDate(ds.child("endDate"));
+        //build and return hackathon
+        return new Hackathon(name, start, end, description, managerName);
+    }
+
+
+    public Date handleDate(DataSnapshot dateDS){
+        //get properties
+        int day = Integer.parseInt(dateDS.child("date").getValue().toString());
+        int month = Integer.parseInt(dateDS.child("month").getValue().toString());
+        int year = 2000 + Integer.parseInt(dateDS.child("year").getValue().toString());
+        //build and return date
+        return new Date(year, month, day);
+    }
+
+    private void fillList(final ListView hackathons_list, List<String> hackathonNames) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathonNames);
+        hackathons_list.setAdapter(adapter);
     }
 
     @Override

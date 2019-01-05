@@ -26,7 +26,7 @@ public class SignedHackathonPage extends AppCompatActivity {
 
         //set text for these TextViews
         hackathonName.setText(hackthon.getName());
-        managerName.setText(hackthon.getManagerName());
+        managerName.setText(hackthon.getManagername());
         description.setText(hackthon.getDescription());
 
         String[] teams_arr = (String[]) hackthon.getTeams().toArray();

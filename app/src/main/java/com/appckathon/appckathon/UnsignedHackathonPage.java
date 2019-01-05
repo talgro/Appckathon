@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class UnsignedHackathonPage extends AppCompatActivity {
@@ -35,7 +34,7 @@ public class UnsignedHackathonPage extends AppCompatActivity {
 
         //set text for these TextViews
         hackathonName.setText(hackthon.getName());
-        managerName.setText(hackthon.getManagerName());
+        managerName.setText(hackthon.getManagername());
         description.setText(hackthon.getDescription());
 
         String[] teams_arr = (String[]) hackthon.getTeams().toArray();

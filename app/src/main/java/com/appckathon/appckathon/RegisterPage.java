@@ -95,5 +95,4 @@ public class RegisterPage extends AppCompatActivity {
                     }
                 });
     }
-
 }
