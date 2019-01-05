@@ -66,6 +66,14 @@ public class Hackathon implements Serializable {
         return _teams;
     }
 
+    public ArrayList<String> getTeamNames() {
+        ArrayList<String> teamNames = new ArrayList<String>();
+        for (Team t: _teams) {
+            teamNames.add(t.getTeamName());
+        }
+        return teamNames;
+    }
+
     public String getManagername() {
         return _managerName;
     }

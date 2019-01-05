@@ -27,6 +27,8 @@
         <activity android:name=".UnsignedHackathonPage"
             android:exported="true" />
         <activity android:name=".SignedHackathonPage"
+        android:exported="true"/>
+        <activity android:name=".ManagedHackathonPage"
             android:exported="true">
         </activity>
     </application>

@@ -113,7 +113,7 @@ public class SearchHackathonsFragment extends Fragment {
         });
     }
 
-    private void considerUserType(final String hackathon){
+    private void considerUserType(final String hackathonName){
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //manager
         DatabaseReference relatedHackathons = FirebaseDatabase.getInstance().getReference("users").child(userID)
@@ -122,23 +122,42 @@ public class SearchHackathonsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Intent intent = null;
-                if (dataSnapshot.child("managing").hasChild(hackathon)) {
+                if (dataSnapshot.child("managing").hasChild(hackathonName)) {
                     intent = new Intent(getContext(), ManagedHackathonPage.class);
                 }
-                else if (dataSnapshot.child("participating").hasChild(hackathon)) {
+                else if (dataSnapshot.child("participating").hasChild(hackathonName)) {
                     intent = new Intent(getContext(), SignedHackathonPage.class);
                 }
                 else{
                     intent = new Intent(getContext(), UnsignedHackathonPage.class);
                 }
-                intent.putExtra("hackathon", hackathon);
-                //TODO: (daniel) app crashes when try to start activity
-                startActivity(intent);
-                getActivity().finish();
+
+                openHackathon(hackathonName, intent);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
+
+    private void openHackathon(final String chosenHackathonName, final Intent intent) {
+        FirebaseDatabase.getInstance().getReference("hackathons").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    if (postSnapshot.child("name").getValue().toString().equals(chosenHackathonName)){
+                        Hackathon selectedHackathonName = HackathonFromSnapshot(postSnapshot);
+                        intent.putExtra("hackathon", selectedHackathonName);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
     }
 

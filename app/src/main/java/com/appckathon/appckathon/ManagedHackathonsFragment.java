@@ -95,7 +95,7 @@ public class ManagedHackathonsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            if (postSnapshot.child("name").getValue().toString() == chosenHackathonName){
+                            if (postSnapshot.child("name").getValue().toString().equals(chosenHackathonName)){
                                 Hackathon selectedHackathonName = HackathonFromSnapshot(postSnapshot);
                                 Intent intent = new Intent(getContext(), ManagedHackathonPage.class);
                                 intent.putExtra("hackathon", selectedHackathonName);
