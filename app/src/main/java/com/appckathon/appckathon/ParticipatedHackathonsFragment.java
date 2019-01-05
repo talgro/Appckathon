@@ -74,7 +74,7 @@ public class ParticipatedHackathonsFragment extends Fragment {
         });
     }
 
-    private Hackathon HackathonFromSnapshot (DataSnapshot ds){
+    private Hackathon HackathonFromSnapshot(DataSnapshot ds) {
         //get properties
         String description = ds.child("description").getValue().toString();
         String managerName = ds.child("managername").getValue().toString();
@@ -85,7 +85,7 @@ public class ParticipatedHackathonsFragment extends Fragment {
         return new Hackathon(name, start, end, description, managerName);
     }
 
-    private void setListenerForHackathonsSelections(final ListView hackathons_list){
+    private void setListenerForHackathonsSelections(final ListView hackathons_list) {
         //set listner
         hackathons_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -94,13 +94,15 @@ public class ParticipatedHackathonsFragment extends Fragment {
                 FirebaseDatabase.getInstance().getReference("hackathons").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                            if (postSnapshot.child("name").getValue().toString().equals(chosenHackathonName)){
-                                Hackathon selectedHackathonName = HackathonFromSnapshot(postSnapshot);
-                                Intent intent = new Intent(getContext(), SignedHackathonPage.class);
-                                intent.putExtra("hackathon", selectedHackathonName);
-                                startActivity(intent);
-                                getActivity().finish();
+                        if (getContext() != null) {
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                if (postSnapshot.child("name").getValue().toString().equals(chosenHackathonName)) {
+                                    Hackathon selectedHackathonName = HackathonFromSnapshot(postSnapshot);
+                                    Intent intent = new Intent(getContext(), SignedHackathonPage.class);
+                                    intent.putExtra("hackathon", selectedHackathonName);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                }
                             }
                         }
                     }
@@ -115,11 +117,13 @@ public class ParticipatedHackathonsFragment extends Fragment {
     }
 
     private void fillList(final ListView hackathons_list, List<String> hackathonNames) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathonNames);
-        hackathons_list.setAdapter(adapter);
+        if (getActivity() != null) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, hackathonNames);
+            hackathons_list.setAdapter(adapter);
+        }
     }
 
-    public Date handleDate(DataSnapshot dateDS){
+    public Date handleDate(DataSnapshot dateDS) {
         //get properties
         int day = Integer.parseInt(dateDS.child("date").getValue().toString());
         int month = Integer.parseInt(dateDS.child("month").getValue().toString());

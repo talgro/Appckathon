@@ -64,6 +64,7 @@ public class UnsignedHackathonPage extends AppCompatActivity {
         //once succesfully added user toast + move to home page
         Toast.makeText(UnsignedHackathonPage.this, "joined hackathon successfully! ", Toast.LENGTH_SHORT).show();
         //navigate back to home page
+
         startActivity(new Intent(UnsignedHackathonPage.this, HomePage.class));
     }
 
