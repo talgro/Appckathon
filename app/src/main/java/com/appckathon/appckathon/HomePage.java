@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HomePage extends AppCompatActivity implements ManagedHackathonsFragment.OnFragmentInteractionListener, ParticipatedHackathonsFragment.OnFragmentInteractionListener, SearchHackathonsFragment.OnFragmentInteractionListener {
 
     /**
@@ -75,8 +77,8 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
         nameField = (TextView) findViewById(R.id.user_full_name);
         emailfield= (TextView) findViewById(R.id.email);
 
-        String currentUserName = "*DEFAULT_USERNAME*"; //TODO: (tal) get this from FB
-        String currentUserEmail = "*DEFAULT_EMAIL*"; //TODO: (tal) get this from FB
+        String currentUserName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         nameField.setText(currentUserName);
         emailfield.setText(currentUserEmail);
