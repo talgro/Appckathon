@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -47,6 +48,10 @@ public class LoginPage extends AppCompatActivity {
                 startActivity(new Intent(LoginPage.this, RegisterPage.class));
             }
         });
+
+        if (getIntent().getBooleanExtra("Exit me", false)) {
+            finish();
+        }
     }
 
     private void signin() {
@@ -60,11 +65,11 @@ public class LoginPage extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LoginPage.this, "Authentication Successful.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginPage.this, HomePage.class));
-                        }
-                        else {
+                        } else {
                             Toast.makeText(LoginPage.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
+
 }

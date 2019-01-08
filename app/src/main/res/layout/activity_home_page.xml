@@ -39,7 +39,7 @@
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:contentDescription="profile picture of a user"
-                app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+                app:srcCompat="@drawable/user_icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -24,7 +24,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:text="default_hackathon_name"
+        android:textColor="@color/com_facebook_blue"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/hackathon_image"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,7 +37,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:text="default_manager_name"
+        android:textColor="@color/com_facebook_blue"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/hackathon_image"
         app:layout_constraintTop_toBottomOf="@+id/hackathon_name" />
 
@@ -54,6 +58,11 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_border"
             android:text="default_hackathon_description"
+            android:textAlignment="center"
+            android:textColor="@color/com_facebook_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"

@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,7 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
 
         //fill text with user info
         nameField = (TextView) findViewById(R.id.user_full_name);
-        emailfield= (TextView) findViewById(R.id.email);
+        emailfield = (TextView) findViewById(R.id.email);
 
         String currentUserName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -89,23 +90,29 @@ public class HomePage extends AppCompatActivity implements ManagedHackathonsFrag
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home_page, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home_page, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.logOutIcon:
+                startActivity(new Intent(HomePage.this, LoginPage.class));
+                return true;
+            case R.id.closeIcon:
+                Intent intent = new Intent(this, LoginPage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("Exit me", true);
+                startActivity(intent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

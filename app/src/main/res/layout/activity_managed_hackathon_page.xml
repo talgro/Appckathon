@@ -31,6 +31,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hackathon_teams_list" />
 
+    <Button
+        android:id="@+id/save_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hackathon_teams_list"
+        app:layout_constraintVertical_bias="0.086" />
+
     <TextView
         android:id="@+id/hackathon_name"
         android:layout_width="250dp"
@@ -38,11 +54,13 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:text="default_hackathon_name"
+        android:textColor="@color/com_facebook_blue"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/hackathon_image"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <EditText
         android:id="@+id/hackathon_description"
         android:layout_width="367dp"
         android:layout_height="122dp"
@@ -51,6 +69,11 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/edit_text_border"
         android:text="default_hackathon_description"
+        android:textAlignment="center"
+        android:textColor="@color/com_facebook_blue"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.964"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +99,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:text="default_manager_name"
+        android:textColor="@color/com_facebook_blue"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/hackathon_image"
         app:layout_constraintTop_toBottomOf="@+id/hackathon_name" />
 
